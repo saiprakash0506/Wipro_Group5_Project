@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.4.1 (Python 3.13.11 on win32)" generated="2026-02-16T14:19:05.096835" rpa="false" schemaversion="5">
+<suite id="s1" name="User Tests" source="C:\Users\user\Desktop\CAPSTONE PROJECT\Foodie_App\tests\robot\user_tests.robot">
+<kw name="Create API Session" owner="keywords" type="SETUP">
+<kw name="Create Session" owner="RequestsLibrary">
+<msg time="2026-02-16T14:19:05.194160" level="INFO">Creating Session using : alias=foodie, url=http://127.0.0.1:5000, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=False,                     debug=0 </msg>
+<arg>${SESSION}</arg>
+<arg>${BASE_URL}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2026-02-16T14:19:05.193985" elapsed="0.000353"/>
+</kw>
+<status status="PASS" start="2026-02-16T14:19:05.193610" elapsed="0.000809"/>
+</kw>
+<test id="s1-t1" name="Register User Positive" line="7">
+<kw name="Create User" owner="keywords">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-02-16T14:19:05.199383" level="INFO">POST Request : url=http://127.0.0.1:5000/api/v1/users/register 
+ path_url=/api/v1/users/register 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '75', 'Content-Type': 'application/json'} 
+ body=b'{"name": "RobotUser", "email": "robot@test.com", "password": "password123"}' 
+ </msg>
+<msg time="2026-02-16T14:19:05.199597" level="INFO">POST Response : url=http://127.0.0.1:5000/api/v1/users/register 
+ status=201, reason=CREATED 
+ headers={'Server': 'Werkzeug/3.1.5 Python/3.13.11', 'Date': 'Mon, 16 Feb 2026 08:49:05 GMT', 'Content-Type': 'application/json', 'Content-Length': '95', 'Connection': 'close'} 
+ body={
+  "email": "robot@test.com",
+  "id": 6,
+  "name": "RobotUser",
+  "password": "password123"
+}
+ 
+ </msg>
+<msg time="2026-02-16T14:19:05.199786" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESSION}</arg>
+<arg>/api/v1/users/register</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-02-16T14:19:05.195241" elapsed="0.004593"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2026-02-16T14:19:05.199951" elapsed="0.000078"/>
+</return>
+<msg time="2026-02-16T14:19:05.200236" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${USER_DATA}</arg>
+<status status="PASS" start="2026-02-16T14:19:05.194909" elapsed="0.005365"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<arg>201</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="PASS" start="2026-02-16T14:19:05.200684" elapsed="0.000471"/>
+</kw>
+<status status="PASS" start="2026-02-16T14:19:05.194471" elapsed="0.007043"/>
+</test>
+<test id="s1-t2" name="Register User Negative" line="11">
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2026-02-16T14:19:05.203318" level="INFO">${invalid} = {'name': 'OnlyName'}</msg>
+<var>${invalid}</var>
+<arg>name=OnlyName</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2026-02-16T14:19:05.202957" elapsed="0.000390"/>
+</kw>
+<kw name="Create User" owner="keywords">
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2026-02-16T14:19:05.207824" level="INFO">POST Request : url=http://127.0.0.1:5000/api/v1/users/register 
+ path_url=/api/v1/users/register 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '20', 'Content-Type': 'application/json'} 
+ body=b'{"name": "OnlyName"}' 
+ </msg>
+<msg time="2026-02-16T14:19:05.207922" level="INFO">POST Response : url=http://127.0.0.1:5000/api/v1/users/register 
+ status=201, reason=CREATED 
+ headers={'Server': 'Werkzeug/3.1.5 Python/3.13.11', 'Date': 'Mon, 16 Feb 2026 08:49:05 GMT', 'Content-Type': 'application/json', 'Content-Length': '36', 'Connection': 'close'} 
+ body={
+  "id": 7,
+  "name": "OnlyName"
+}
+ 
+ </msg>
+<msg time="2026-02-16T14:19:05.208065" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${SESSION}</arg>
+<arg>/api/v1/users/register</arg>
+<arg>json=${payload}</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2026-02-16T14:19:05.203898" elapsed="0.004197"/>
+</kw>
+<return>
+<value>${response}</value>
+<status status="PASS" start="2026-02-16T14:19:05.208184" elapsed="0.000055"/>
+</return>
+<msg time="2026-02-16T14:19:05.208428" level="INFO">${response} = &lt;Response [201]&gt;</msg>
+<var>${response}</var>
+<arg>${invalid}</arg>
+<status status="PASS" start="2026-02-16T14:19:05.203639" elapsed="0.004838"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<msg time="2026-02-16T14:19:05.209094" level="FAIL">Url: http://127.0.0.1:5000/api/v1/users/register Expected status: 201 != 400</msg>
+<arg>400</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="FAIL" start="2026-02-16T14:19:05.208775" elapsed="0.001876">Url: http://127.0.0.1:5000/api/v1/users/register Expected status: 201 != 400</status>
+</kw>
+<status status="FAIL" start="2026-02-16T14:19:05.202500" elapsed="0.008714">Url: http://127.0.0.1:5000/api/v1/users/register Expected status: 201 != 400</status>
+</test>
+<status status="FAIL" start="2026-02-16T14:19:05.098055" elapsed="0.113948"/>
+</suite>
+<statistics>
+<total>
+<stat pass="1" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="User Tests" id="s1" pass="1" fail="1" skip="0">User Tests</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>
