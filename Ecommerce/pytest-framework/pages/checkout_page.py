@@ -3,30 +3,25 @@ from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
 
 class CheckoutPage(BasePage):
-    # Previous locators...
     FIRST_NAME = (By.ID, "first-name")
     LAST_NAME = (By.ID, "last-name")
     POSTAL_CODE = (By.ID, "postal-code")
     CONTINUE_BTN = (By.ID, "continue")
     FINISH_BTN = (By.ID, "finish")
     SUCCESS_MSG = (By.CLASS_NAME, "complete-header")
-    BACK_HOME_BTN = (By.ID, "back-to-products") # NEW LOCATOR
+    BACK_HOME_BTN = (By.ID, "back-to-products")
 
     def fill_checkout_info(self, fname, lname, zip_code):
         self.do_send_keys(self.FIRST_NAME, fname)
         self.do_send_keys(self.LAST_NAME, lname)
         self.do_send_keys(self.POSTAL_CODE, zip_code)
-        time.sleep(2)
         self.do_click(self.CONTINUE_BTN)
 
     def finish_checkout(self):
-        time.sleep(2)
         self.do_click(self.FINISH_BTN)
 
     def click_back_home(self):
-        time.sleep(2) # Pause to see the "Thank You" message
         self.do_click(self.BACK_HOME_BTN)
-        time.sleep(2) # Pause to see inventory page again
 
     def get_success_message(self):
         return self.get_element_text(self.SUCCESS_MSG)
