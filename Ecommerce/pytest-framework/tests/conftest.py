@@ -27,7 +27,6 @@ def setup(request):
 def log_in_setup(request):
     driver = request.cls.driver
     driver.get("https://www.saucedemo.com/")
-    
     path = os.path.join("data", "test_data.csv")
     with open(path, mode='r') as file:
         reader = csv.DictReader(file)

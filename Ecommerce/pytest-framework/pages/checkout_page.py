@@ -18,8 +18,7 @@ class CheckoutPage(BasePage):
         self.do_click(self.CONTINUE_BTN)
 
     def finish_checkout(self):
-        # NEW: Slower scroll to show Price, Tax, and Total
-        self.slow_scroll_detailed() 
+        self.slow_scroll_detailed() # Showing prices and tax
         finish_element = self.driver.find_element(*self.FINISH_BTN)
         self.smooth_scroll(finish_element)
         time.sleep(1)

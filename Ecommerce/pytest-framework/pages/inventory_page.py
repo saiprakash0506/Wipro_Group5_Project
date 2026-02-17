@@ -24,4 +24,3 @@ class InventoryPage(BasePage):
         logout_btn = self.wait.until(EC.element_to_be_clickable(self.LOGOUT_LINK))
         time.sleep(1)
         logout_btn.click()
-        time.sleep(1.5)

@@ -24,15 +24,15 @@ class TestEcommerceE2E:
         self.cartPage = CartPage(self.driver)
         self.checkoutPage = CheckoutPage(self.driver)
 
-        # 1. Add 5 items
+        # Step 1: Add 5 items
         self.inventoryPage.add_five_items()
         self.inventoryPage.go_to_cart()
 
-        # 2. Remove 1 item directly (No extra review scroll)
+        # Step 2: Remove specific item
         product_to_del = test_info['product_to_remove']
         self.cartPage.remove_item_by_name(product_to_del)
 
-        # 3. Checkout (Includes slow price review at the end)
+        # Step 3: Checkout with slow summary scroll
         self.cartPage.click_checkout()
         self.checkoutPage.fill_checkout_info(
             test_info['first_name'], 
@@ -41,7 +41,7 @@ class TestEcommerceE2E:
         )
         self.checkoutPage.finish_checkout()
 
-        # 4. Final verification
+        # Step 4: Verify and Logout
         assert "Thank you" in self.checkoutPage.get_success_message()
         self.checkoutPage.click_back_home()
         self.inventoryPage.logout()

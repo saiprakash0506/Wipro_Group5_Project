@@ -20,14 +20,15 @@ User Can Complete Checkout Successfully
 
     # Go to cart
     Go To Cart
+    Sleep    ${DELAY}
 
     # Checkout process
     Click Button    id=checkout
     Sleep    ${DELAY}
 
-    Input Text    id=first-name    John
+    Input Text    id=first-name    Group5
     Sleep    ${DELAY}
-    Input Text    id=last-name     Snow
+    Input Text    id=last-name     Project
     Sleep    ${DELAY}
     Input Text    id=postal-code   12345
     Sleep    ${DELAY}
@@ -39,3 +40,8 @@ User Can Complete Checkout Successfully
     Sleep    ${DELAY}
 
     Page Should Contain    Thank you for your order!
+
+    Click Button     id=back-to-products
+
+    Logout From Application
+

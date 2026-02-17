@@ -4,13 +4,10 @@ from pages.base_page import BasePage
 
 class CartPage(BasePage):
     CHECKOUT_BTN = (By.ID, "checkout")
-    CART_ITEMS = (By.CLASS_NAME, "cart_item")
     
     def remove_item_by_name(self, product_name):
-        # Directly scroll to the specific item to remove
         formatted_name = product_name.lower().replace(" ", "-")
         remove_btn_locator = (By.ID, f"remove-{formatted_name}")
-        
         self.do_click(remove_btn_locator)
         time.sleep(1.5)
 
