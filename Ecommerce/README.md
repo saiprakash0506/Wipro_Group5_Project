@@ -312,14 +312,14 @@ Through this project, you will learn:
 
 Developed by **Wipro Training – Group 5**
 
-| #   | Name               | GitHub |
-| --- | ------------------ | ------ |
-| 1   | Sai Prakash        |
-| 2   | Prashant Kumar Jha |
-| 3   | Bhagyashree N      |
-| 4   | Chowdam Mahendra   |
-| 5   | Praseed            |
-| 6   | Ravinesh Tiwari    |
+| #   | Name                   |
+| --- | ---------------------- |
+| 1   | Sai Prakash            |
+| 2   | Prashant Kumar Jha     |
+| 3   | Bhagyashree N          |
+| 4   | Chowdam Mahendra       |
+| 5   | Praseed Sreepadmakumar |
+| 6   | Ravinesh Tiwari        |
 
 ---
 
