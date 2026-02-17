@@ -1,5 +1,4 @@
 import pytest
-import time
 import csv
 import os
 from pages.inventory_page import InventoryPage
@@ -25,17 +24,15 @@ class TestEcommerceE2E:
         self.cartPage = CartPage(self.driver)
         self.checkoutPage = CheckoutPage(self.driver)
 
-        # 1. Add 4 items
-        self.inventoryPage.add_four_items()
-
-        # 2. Go to cart
+        # 1. Add 5 items
+        self.inventoryPage.add_five_items()
         self.inventoryPage.go_to_cart()
 
-        # 3. Remove 1 item based on CSV
+        # 2. Remove 1 item directly (No extra review scroll)
         product_to_del = test_info['product_to_remove']
         self.cartPage.remove_item_by_name(product_to_del)
 
-        # 4. Checkout
+        # 3. Checkout (Includes slow price review at the end)
         self.cartPage.click_checkout()
         self.checkoutPage.fill_checkout_info(
             test_info['first_name'], 
@@ -44,7 +41,7 @@ class TestEcommerceE2E:
         )
         self.checkoutPage.finish_checkout()
 
-        # 5. Verify & Logout
+        # 4. Final verification
         assert "Thank you" in self.checkoutPage.get_success_message()
         self.checkoutPage.click_back_home()
         self.inventoryPage.logout()

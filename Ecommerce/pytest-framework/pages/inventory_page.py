@@ -9,12 +9,12 @@ class InventoryPage(BasePage):
     BURGER_MENU = (By.ID, "react-burger-menu-btn")
     LOGOUT_LINK = (By.ID, "logout_sidebar_link")
 
-    def add_four_items(self):
+    def add_five_items(self):
         buttons = self.driver.find_elements(*self.ADD_BUTTONS)
-        for i in range(4):
+        for i in range(5):
             self.smooth_scroll(buttons[i])
             buttons[i].click()
-            time.sleep(1)
+            time.sleep(0.8)
 
     def go_to_cart(self):
         self.do_click(self.CART_ICON)
@@ -22,6 +22,6 @@ class InventoryPage(BasePage):
     def logout(self):
         self.do_click(self.BURGER_MENU)
         logout_btn = self.wait.until(EC.element_to_be_clickable(self.LOGOUT_LINK))
-        time.sleep(1) 
+        time.sleep(1)
         logout_btn.click()
-        time.sleep(2)
+        time.sleep(1.5)

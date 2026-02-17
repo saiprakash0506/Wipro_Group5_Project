@@ -18,10 +18,15 @@ class CheckoutPage(BasePage):
         self.do_click(self.CONTINUE_BTN)
 
     def finish_checkout(self):
-        self.do_click(self.FINISH_BTN)
-
-    def click_back_home(self):
-        self.do_click(self.BACK_HOME_BTN)
+        # NEW: Slower scroll to show Price, Tax, and Total
+        self.slow_scroll_detailed() 
+        finish_element = self.driver.find_element(*self.FINISH_BTN)
+        self.smooth_scroll(finish_element)
+        time.sleep(1)
+        finish_element.click()
 
     def get_success_message(self):
         return self.get_element_text(self.SUCCESS_MSG)
+
+    def click_back_home(self):
+        self.do_click(self.BACK_HOME_BTN)
