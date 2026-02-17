@@ -17,22 +17,24 @@ def get_csv_data():
 @pytest.mark.usefixtures("setup")
 class TestEcommerceE2E:
 
-    @pytest.mark.parametrize("test_info", get_csv_data())
+    @pytest.mark.parametrize("test_info", get_csv_data(), ids=[f"Scenario_{i+1}" for i in range(len(get_csv_data()))])
     @pytest.mark.usefixtures("log_in_setup")
     def test_visual_e2e_flow(self, test_info):
+        print(f"\nRunning test for customer: {test_info['first_name']}")
+        
         self.inventoryPage = InventoryPage(self.driver)
         self.cartPage = CartPage(self.driver)
         self.checkoutPage = CheckoutPage(self.driver)
 
-        # Step 1: Add 5 items
+        # 1. Add 5 items
         self.inventoryPage.add_five_items()
         self.inventoryPage.go_to_cart()
 
-        # Step 2: Remove specific item
+        # 2. Remove 1 item (Dynamic based on CSV)
         product_to_del = test_info['product_to_remove']
         self.cartPage.remove_item_by_name(product_to_del)
 
-        # Step 3: Checkout with slow summary scroll
+        # 3. Checkout (Dynamic based on CSV)
         self.cartPage.click_checkout()
         self.checkoutPage.fill_checkout_info(
             test_info['first_name'], 
@@ -41,7 +43,7 @@ class TestEcommerceE2E:
         )
         self.checkoutPage.finish_checkout()
 
-        # Step 4: Verify and Logout
+        # 4. Success Verification & Logout
         assert "Thank you" in self.checkoutPage.get_success_message()
         self.checkoutPage.click_back_home()
         self.inventoryPage.logout()

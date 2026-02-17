@@ -6,6 +6,7 @@ class CartPage(BasePage):
     CHECKOUT_BTN = (By.ID, "checkout")
     
     def remove_item_by_name(self, product_name):
+        # Finds the specific 'Remove' button based on product name
         formatted_name = product_name.lower().replace(" ", "-")
         remove_btn_locator = (By.ID, f"remove-{formatted_name}")
         self.do_click(remove_btn_locator)

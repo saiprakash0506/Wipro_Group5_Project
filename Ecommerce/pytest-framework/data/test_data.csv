@@ -1,2 +1,6 @@
 username,password,first_name,last_name,zip_code,product_to_remove
-standard_user,secret_sauce,Group5,Project,12345,Sauce Labs Backpack
+standard_user,secret_sauce,Sai,Prakash,500001,Sauce Labs Backpack
+standard_user,secret_sauce,Bhagyashree,N,20002,Sauce Labs Bike Light
+standard_user,secret_sauce,Mahendra,Chowdam,30003,Sauce Labs Bolt T-Shirt
+standard_user,secret_sauce,Praseed,Sreepadmakumar,40004,Sauce Labs Fleece Jacket
+standard_user,secret_sauce,Ravinesh,Tiwari,50005,Sauce Labs Onesie

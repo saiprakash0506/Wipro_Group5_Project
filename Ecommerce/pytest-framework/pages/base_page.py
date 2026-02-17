@@ -26,6 +26,7 @@ class BasePage:
         return element.text
 
     def smooth_scroll(self, element):
+        """Standard center-aligned smooth scroll."""
         self.driver.execute_script(
             "arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", 
             element
@@ -33,8 +34,8 @@ class BasePage:
         time.sleep(1.2) 
 
     def slow_scroll_detailed(self):
-        """Very slow scroll to show pricing and tax details clearly."""
+        """Specifically for the checkout summary to show price/tax clearly."""
         for i in range(0, 550, 4):
             self.driver.execute_script(f"window.scrollTo(0, {i});")
             time.sleep(0.03)
-        time.sleep(2.5)
+        time.sleep(2.0)
