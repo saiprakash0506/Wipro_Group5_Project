@@ -24,7 +24,7 @@ def log_in_setup(request):
     driver = request.cls.driver
     driver.get("https://www.saucedemo.com/")
     
-    # We pull the login details directly from the current test row
+    # This pulls the data for each of the 6 users in your CSV
     current_row = request.node.callspec.params.get("test_info")
     
     driver.find_element(By.ID, "user-name").send_keys(current_row['username'])
