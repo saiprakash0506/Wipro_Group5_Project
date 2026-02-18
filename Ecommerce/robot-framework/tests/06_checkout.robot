@@ -1,47 +1,24 @@
 *** Settings ***
-Resource    ../keywords/ecommerce_keywords.robot
-Suite Setup    Open Website
+Library           SeleniumLibrary
+Library           OperatingSystem
+Library           Collections
+Library           String
+Resource          ../keywords/ecommerce_keywords.robot
+Suite Setup       Open Website
 Suite Teardown    Close Website
 
 *** Test Cases ***
-User Can Complete Checkout Successfully
-    Login To Application
+Checkout With Multiple Users From CSV
+    ${file}=    Get File    ${CURDIR}/../data/checkout_data.csv
+    ${lines}=   Split To Lines    ${file}
 
-    # Sort items low to high
-    Sort Products Low To High
+    ${data}=    Get Slice From List    ${lines}    1
 
-    # Add first 3 products
-    Add Four Products To Cart
+    FOR    ${row}    IN    @{data}
+        ${columns}=      Split String    ${row}    ,
+        ${first_name}=   Get From List    ${columns}    0
+        ${last_name}=    Get From List    ${columns}    1
+        ${postal_code}=  Get From List    ${columns}    2
 
-    # Verify badge shows 3
-    ${count}=    Get Text    css=.shopping_cart_badge
-    Should Be Equal    ${count}    4
-    Sleep    ${DELAY}
-
-    # Go to cart
-    Go To Cart
-    Sleep    ${DELAY}
-
-    # Checkout process
-    Click Button    id=checkout
-    Sleep    ${DELAY}
-
-    Input Text    id=first-name    Group5
-    Sleep    ${DELAY}
-    Input Text    id=last-name     Project
-    Sleep    ${DELAY}
-    Input Text    id=postal-code   12345
-    Sleep    ${DELAY}
-
-    Click Button    id=continue
-    Sleep    ${DELAY}
-
-    Click Button    id=finish
-    Sleep    ${DELAY}
-
-    Page Should Contain    Thank you for your order!
-
-    Click Button     id=back-to-products
-
-    Logout From Application
-
+        Checkout With User Data    ${first_name}    ${last_name}    ${postal_code}
+    END

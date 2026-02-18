@@ -4,11 +4,51 @@ Resource   ../variables/config.robot
 
 *** Keywords ***
 Open Website
-    Open Browser    ${URL}    ${BROWSER}
-    Maximize Browser Window
-    Set Selenium Speed    0.3s
+    IF    '${BROWSER}' == 'Chrome'
+
+        ${options}=    Evaluate    sys.modules['selenium.webdriver'].ChromeOptions()    sys, selenium.webdriver
+        ${temp_dir}=    Evaluate    __import__('tempfile').mkdtemp()
+
+        ${prefs}=    Create Dictionary
+        ...    credentials_enable_service=False
+        ...    profile.password_manager_enabled=False
+        ...    profile.default_content_setting_values.notifications=2
+
+        Call Method    ${options}    add_experimental_option    prefs    ${prefs}
+
+        ${incognito}=        Set Variable    --incognito
+        ${disable_pw}=       Set Variable    --disable-features=PasswordLeakDetection
+        ${disable_notify}=   Set Variable    --disable-notifications
+        ${no_first}=         Set Variable    --no-first-run
+        ${no_default}=       Set Variable    --no-default-browser-check
+        ${maximize}=         Set Variable    --start-maximized
+        ${profile}=          Set Variable    --user-data-dir=${temp_dir}
+
+        Call Method    ${options}    add_argument    ${incognito}
+        Call Method    ${options}    add_argument    ${disable_pw}
+        Call Method    ${options}    add_argument    ${disable_notify}
+        Call Method    ${options}    add_argument    ${no_first}
+        Call Method    ${options}    add_argument    ${no_default}
+        Call Method    ${options}    add_argument    ${maximize}
+        Call Method    ${options}    add_argument    ${profile}
+
+        Create WebDriver    Chrome    options=${options}
+        Go To    ${URL}
+
+    ELSE IF    '${BROWSER}' == 'Edge'
+        Open Browser    ${URL}    Edge
+        Maximize Browser Window
+
+    ELSE IF    '${BROWSER}' == 'Firefox'
+        ${ff_options}=    Evaluate    sys.modules['selenium.webdriver'].FirefoxOptions()    sys, selenium.webdriver
+        Call Method    ${ff_options}    add_argument    -private
+        Create WebDriver    Firefox    options=${ff_options}
+        Go To    ${URL}
+    END
+
     Wait Until Element Is Visible    id=user-name    timeout=10s
     Sleep    ${DELAY}
+
 
 Close Website
     Sleep    ${DELAY}
@@ -58,4 +98,39 @@ Logout From Application
 Sort Products Low To High
     Select From List By Value    css=.product_sort_container    lohi
     Sleep    ${DELAY}
+
+Checkout With User Data
+    [Arguments]    ${first_name}    ${last_name}    ${postal_code}
+
+    Login To Application
+
+    Sort Products Low To High
+
+    Add Four Products To Cart
+
+    Verify Cart Has Four Items
+
+    Go To Cart
+    Sleep    ${DELAY}
+
+    Click Button    id=checkout
+    Sleep    ${DELAY}
+
+    Input Text    id=first-name    ${first_name}
+    Sleep    ${DELAY}
+    Input Text    id=last-name     ${last_name}
+    Sleep    ${DELAY}
+    Input Text    id=postal-code   ${postal_code}
+    Sleep    ${DELAY}
+
+    Click Button    id=continue
+    Sleep    ${DELAY}
+
+    Click Button    id=finish
+    Sleep    ${DELAY}
+
+    Page Should Contain    Thank you for your order!
+
+    Click Button    id=back-to-products
+    Logout From Application
 

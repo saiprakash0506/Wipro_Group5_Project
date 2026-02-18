@@ -1,26 +1,21 @@
-import time
 from selenium.webdriver.common.by import By
 from pages.base_page import BasePage
-from selenium.webdriver.support import expected_conditions as EC
 
 class InventoryPage(BasePage):
-    ADD_BUTTONS = (By.XPATH, "//button[text()='Add to cart']")
-    CART_ICON = (By.CLASS_NAME, "shopping_cart_link")
-    BURGER_MENU = (By.ID, "react-burger-menu-btn")
-    LOGOUT_LINK = (By.ID, "logout_sidebar_link")
+    def __init__(self, driver):
+        super().__init__(driver)
+        self.add_btns = (By.XPATH, "//button[text()='Add to cart']")
+        self.cart_icon = (By.CLASS_NAME, "shopping_cart_link")
+        self.menu_btn = (By.ID, "react-burger-menu-btn")
 
     def add_five_items(self):
-        buttons = self.driver.find_elements(*self.ADD_BUTTONS)
-        for i in range(5):
-            self.smooth_scroll(buttons[i])
+        buttons = self.driver.find_elements(*self.add_btns)
+        for i in range(min(5, len(buttons))):
             buttons[i].click()
-            time.sleep(0.8)
 
     def go_to_cart(self):
-        self.do_click(self.CART_ICON)
+        self.click(self.cart_icon)
 
     def logout(self):
-        self.do_click(self.BURGER_MENU)
-        logout_btn = self.wait.until(EC.element_to_be_clickable(self.LOGOUT_LINK))
-        time.sleep(1)
-        logout_btn.click()
+        self.click(self.menu_btn)
+        self.click((By.ID, "logout_sidebar_link"))

@@ -1,0 +1,9 @@
+robot -d reports/edge --variable BROWSER:Edge tests/
+
+
+robot -d reports/chrome --variable BROWSER:Chrome tests/
+
+
+robot -d reports/firefox --variable BROWSER:Firefox tests/
+
+
