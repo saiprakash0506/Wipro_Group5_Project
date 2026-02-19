@@ -1,0 +1,5 @@
+username,password,error_msg
+invalidusername,invalidpassword,do not match any user
+standard_user,,password is required
+,secret_sauce,username is required
+locked_out_user,secret_sauce,"Sorry, this user has been locked out"

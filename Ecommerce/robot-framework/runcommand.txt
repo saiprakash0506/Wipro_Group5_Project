@@ -1,9 +1,36 @@
-robot -d reports/edge --variable BROWSER:Edge tests/
+$today = Get-Date -Format "yyyy-MM-dd"
+$browser = "Chrome"
 
+$run = 1
+while (Test-Path "reports/Chrome/${browser}_$today`_Run$run") {
+    $run++
+}
 
-robot -d reports/chrome --variable BROWSER:Chrome tests/
+$folder = "reports/Chrome/${browser}_$today`_Run$run"
 
+robot -d $folder --variable BROWSER:$browser tests/
+-----------------------------------------------------------------------------
+$today = Get-Date -Format "yyyy-MM-dd"
+$browser = "Edge"
 
-robot -d reports/firefox --variable BROWSER:Firefox tests/
+$run = 1
+while (Test-Path "reports/Edge/${browser}_$today`_Run$run") {
+    $run++
+}
 
+$folder = "reports/Edge/${browser}_$today`_Run$run"
 
+robot -d $folder --variable BROWSER:$browser tests/
+
+-----------------------------------------------------------------------------------------
+$today = Get-Date -Format "yyyy-MM-dd"
+$browser = "Firefox"
+
+$run = 1
+while (Test-Path "reports/Firefox/${browser}_$today`_Run$run") {
+    $run++
+}
+
+$folder = "reports/Firefox/${browser}_$today`_Run$run"
+
+robot -d $folder --variable BROWSER:$browser tests/

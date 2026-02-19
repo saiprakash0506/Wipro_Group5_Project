@@ -1,31 +1,51 @@
 import pytest
-from pages.inventory_page import InventoryPage
-from pages.cart_page import CartPage
-from pages.checkout_page import CheckoutPage
+import time
 from selenium.webdriver.common.by import By
+from pages.inventory_page import InventoryPage
 
-@pytest.mark.usefixtures("setup", "log_in_setup")
+@pytest.mark.usefixtures("setup")
 class TestCheckoutRandom:
+    def slow_type(self, element, text):
+        for char in text:
+            element.send_keys(char)
+            time.sleep(0.05)
+
     def test_04_verify_random_checkout(self):
-        inv = InventoryPage(self.driver)
-        cart = CartPage(self.driver)
-        check = CheckoutPage(self.driver)
+        driver = self.driver
+        log = self.logger
+        inv = InventoryPage(driver)
 
-        # 1. Add items
-        inv.add_five_items()
+        log.info("--- STARTING TEST CASE: Full Checkout ---")
+
+        # --- STEP 1: LOGIN ---
+        driver.get("https://www.saucedemo.com/")
+        self.slow_type(driver.find_element(By.ID, "user-name"), "standard_user")
+        self.slow_type(driver.find_element(By.ID, "password"), "secret_sauce")
+        driver.find_element(By.ID, "login-button").click()
+
+        # --- STEP 2: ADD ITEMS ---
+        log.info("Adding items to the cart...")
+        for i in range(3): # Adding 3 items for this specific test
+            items = driver.find_elements(By.CLASS_NAME, "inventory_item")
+            items[i].find_element(By.CSS_SELECTOR, ".btn_inventory").click()
+        
+        # --- STEP 3: CHECKOUT ---
         inv.go_to_cart()
+        driver.find_element(By.ID, "checkout").click()
+        
+        log.info("Entering Random Details...")
+        self.slow_type(driver.find_element(By.ID, "first-name"), "John")
+        self.slow_type(driver.find_element(By.ID, "last-name"), "Doe")
+        self.slow_type(driver.find_element(By.ID, "postal-code"), "90210")
+        
+        driver.find_element(By.ID, "continue").click()
+        
+        # Finish
+        finish_btn = driver.find_element(By.ID, "finish")
+        driver.execute_script("arguments[0].scrollIntoView({behavior: 'smooth', block: 'center'});", finish_btn)
+        finish_btn.click()
 
-        # 2. Scroll and Remove one item manually to test scrolling
-        rem_btn = self.driver.find_element(By.XPATH, "(//button[text()='Remove'])[1]")
-        inv.smooth_scroll(rem_btn) # This now works because it's in BasePage
-        rem_btn.click()
-
-        # 3. Proceed to checkout
-        cart.click_checkout()
-
-        # 4. Fill details and finish
-        check.fill_details("QA", "Engineer", "560001")
-        check.finish_order()
-
-        # 5. Assertion
-        assert "Thank you" in check.get_confirmation()
+        # Verify
+        success_text = driver.find_element(By.CLASS_NAME, "complete-header").text
+        assert "Thank you" in success_text
+        log.info("Full checkout verified successfully.")

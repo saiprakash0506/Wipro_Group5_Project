@@ -1,0 +1,3 @@
+2026-02-19 16:03:06,032 - INFO - --- STARTING: User EmptyName ---
+2026-02-19 16:03:16,627 - ERROR - DYNAMIC ERROR: Error: First Name is required
+2026-02-19 16:03:16,712 - INFO - Terminating current row and moving to next...

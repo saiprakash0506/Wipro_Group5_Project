@@ -1,5 +1,5 @@
 *** Settings ***
-Library    SeleniumLibrary
+Library    SeleniumLibrary    run_on_failure=Nothing
 Resource   ../variables/config.robot
 
 *** Keywords ***
@@ -103,34 +103,42 @@ Checkout With User Data
     [Arguments]    ${first_name}    ${last_name}    ${postal_code}
 
     Login To Application
-
     Sort Products Low To High
-
     Add Four Products To Cart
-
     Verify Cart Has Four Items
-
     Go To Cart
-    Sleep    ${DELAY}
 
     Click Button    id=checkout
-    Sleep    ${DELAY}
 
     Input Text    id=first-name    ${first_name}
-    Sleep    ${DELAY}
     Input Text    id=last-name     ${last_name}
-    Sleep    ${DELAY}
     Input Text    id=postal-code   ${postal_code}
-    Sleep    ${DELAY}
 
     Click Button    id=continue
-    Sleep    ${DELAY}
 
-    Click Button    id=finish
-    Sleep    ${DELAY}
+    ${success_page}=    Run Keyword And Return Status
+    ...    Wait Until Element Is Visible    id=finish    timeout=3s
 
-    Page Should Contain    Thank you for your order!
+    IF    ${success_page}
+        Click Button    id=finish
+        Page Should Contain    Thank you for your order!
+    ELSE
+        Wait Until Page Contains Element    css=h3[data-test="error"]    timeout=3s
+        Log    Validation error appeared for invalid data
+        Fail    Invalid checkout data
+    END
 
     Click Button    id=back-to-products
     Logout From Application
+
+Attempt Invalid Login
+    [Arguments]    ${username}    ${password}
+
+    Input Text    id=user-name    ${username}
+    Input Text    id=password     ${password}
+    Click Button  id=login-button
+
+    Wait Until Page Contains Element    css=h3[data-test="error"]    timeout=5s
+    Page Should Contain    Username and password do not match
+
 
