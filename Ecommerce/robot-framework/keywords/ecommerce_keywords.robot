@@ -111,10 +111,14 @@ Checkout With User Data
     Click Button    id=checkout
 
     Input Text    id=first-name    ${first_name}
+    Sleep    ${DELAY}
     Input Text    id=last-name     ${last_name}
+    Sleep    ${DELAY}
     Input Text    id=postal-code   ${postal_code}
+    Sleep    ${DELAY}
 
     Click Button    id=continue
+    Sleep    ${DELAY}
 
     ${success_page}=    Run Keyword And Return Status
     ...    Wait Until Element Is Visible    id=finish    timeout=3s
@@ -127,7 +131,7 @@ Checkout With User Data
         Log    Validation error appeared for invalid data
         Fail    Invalid checkout data
     END
-
+    Sleep    ${DELAY}
     Click Button    id=back-to-products
     Logout From Application
 
@@ -135,8 +139,11 @@ Attempt Invalid Login
     [Arguments]    ${username}    ${password}
 
     Input Text    id=user-name    ${username}
+    Sleep    ${DELAY}
     Input Text    id=password     ${password}
+    Sleep    ${DELAY}
     Click Button  id=login-button
+    Sleep    ${DELAY}
 
     Wait Until Page Contains Element    css=h3[data-test="error"]    timeout=5s
     Page Should Contain    Username and password do not match
