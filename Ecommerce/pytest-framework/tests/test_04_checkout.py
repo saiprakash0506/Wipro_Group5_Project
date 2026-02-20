@@ -34,9 +34,9 @@ class TestCheckoutRandom:
         driver.find_element(By.ID, "checkout").click()
         
         log.info("Entering Random Details...")
-        self.slow_type(driver.find_element(By.ID, "first-name"), "John")
-        self.slow_type(driver.find_element(By.ID, "last-name"), "Doe")
-        self.slow_type(driver.find_element(By.ID, "postal-code"), "90210")
+        self.slow_type(driver.find_element(By.ID, "first-name"), "Group 5 ")
+        self.slow_type(driver.find_element(By.ID, "last-name"), "Project")
+        self.slow_type(driver.find_element(By.ID, "postal-code"), "12345")
         
         driver.find_element(By.ID, "continue").click()
         
