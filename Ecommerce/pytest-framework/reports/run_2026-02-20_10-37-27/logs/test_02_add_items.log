@@ -1,0 +1,24 @@
+2026-02-20 10:38:43,649 - INFO - Navigating to site for smooth login...
+2026-02-20 10:38:44,489 - INFO - Entering username smoothly...
+2026-02-20 10:38:46,399 - INFO - Entering password smoothly...
+2026-02-20 10:38:48,597 - INFO - Login clicked.
+2026-02-20 10:38:48,597 - INFO - --- STARTING: Item Addition with Borders ---
+2026-02-20 10:38:48,680 - INFO - Scrolling to item 1: Sauce Labs Backpack
+2026-02-20 10:38:49,688 - INFO - Highlighting button for: Sauce Labs Backpack
+2026-02-20 10:38:50,278 - INFO - Added Sauce Labs Backpack to cart.
+2026-02-20 10:38:50,829 - INFO - Scrolling to item 2: Sauce Labs Bike Light
+2026-02-20 10:38:51,837 - INFO - Highlighting button for: Sauce Labs Bike Light
+2026-02-20 10:38:52,388 - INFO - Added Sauce Labs Bike Light to cart.
+2026-02-20 10:38:52,909 - INFO - Scrolling to item 3: Sauce Labs Bolt T-Shirt
+2026-02-20 10:38:53,912 - INFO - Highlighting button for: Sauce Labs Bolt T-Shirt
+2026-02-20 10:38:54,503 - INFO - Added Sauce Labs Bolt T-Shirt to cart.
+2026-02-20 10:38:55,093 - INFO - Scrolling to item 4: Sauce Labs Fleece Jacket
+2026-02-20 10:38:56,108 - INFO - Highlighting button for: Sauce Labs Fleece Jacket
+2026-02-20 10:38:56,717 - INFO - Added Sauce Labs Fleece Jacket to cart.
+2026-02-20 10:38:57,280 - INFO - Scrolling to item 5: Sauce Labs Onesie
+2026-02-20 10:38:58,290 - INFO - Highlighting button for: Sauce Labs Onesie
+2026-02-20 10:38:58,835 - INFO - Added Sauce Labs Onesie to cart.
+2026-02-20 10:39:00,372 - INFO - Cart badge value found: 5
+2026-02-20 10:39:00,372 - INFO - POSITIVE ASSERT: Badge correctly shows 5.
+2026-02-20 10:39:00,372 - INFO - NEGATIVE ASSERT: Cart is not empty.
+2026-02-20 10:39:00,372 - INFO - --- TEST CASE COMPLETED PASSED ---
