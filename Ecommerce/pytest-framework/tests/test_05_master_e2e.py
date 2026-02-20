@@ -8,6 +8,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 def get_csv_data():
     path = os.path.join("data", "test_data.csv")
+    if not os.path.exists(path): return []
     with open(path, mode='r', encoding='utf-8') as f:
         return list(csv.DictReader(f))
 
@@ -67,19 +68,29 @@ class TestMasterE2E:
         cont_btn = driver.find_element(By.ID, "continue")
         self.apply_border(driver, cont_btn); cont_btn.click()
 
-        # --- DYNAMIC ERROR CHECKING ---
+        # --- UPDATED DYNAMIC ERROR CHECKING LOGIC ---
         errors = driver.find_elements(By.CSS_SELECTOR, "h3[data-test='error']")
         if len(errors) > 0:
             error_msg = errors[0].text
             log.error(f"DYNAMIC ERROR: {error_msg}")
             
-            # Save Screenshot to specialized folder
-            if not os.path.exists("reports/errors"): os.makedirs("reports/errors")
-            ss_name = f"reports/errors/checkout_fail_{row['first_name'] or 'missing'}_{int(time.time())}.png"
-            driver.save_screenshot(ss_name)
+            # 1. Get current run folder from environment variable
+            current_run = os.environ.get("CURRENT_RUN_DIR", "reports")
+            error_dir = os.path.join(current_run, "errors")
+            
+            # 2. Ensure folder exists inside the RUN folder
+            os.makedirs(error_dir, exist_ok=True)
+            
+            # 3. Build dynamic path
+            file_name = f"checkout_fail_{row['first_name'] or 'missing'}_{int(time.time())}.png"
+            ss_path = os.path.join(error_dir, file_name)
+            
+            # 4. Save
+            driver.save_screenshot(ss_path)
+            log.info(f"Screenshot saved to: {ss_path}")
             
             log.info("Terminating current row and moving to next...")
-            return  # This exits THIS row iteration and triggers the NEXT row in the CSV
+            return  
 
         # 5. Finalize (Only reached if no errors)
         finish_btn = wait.until(EC.element_to_be_clickable((By.ID, "finish")))
@@ -90,7 +101,7 @@ class TestMasterE2E:
         back_btn = wait.until(EC.element_to_be_clickable((By.ID, "back-to-products")))
         self.apply_border(driver, back_btn); back_btn.click()
 
-        # 7. Logout (Neon Shadow)
+        # 7. Logout
         driver.execute_script("window.scrollTo(0, 0);")
         burger = wait.until(EC.element_to_be_clickable((By.ID, "react-burger-menu-btn")))
         self.apply_shadow(driver, burger); burger.click()

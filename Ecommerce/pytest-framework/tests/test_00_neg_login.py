@@ -49,10 +49,16 @@ class TestNegativeLogin:
             actual_error = error_element.text
             log.info(f"Error caught: {actual_error}")
 
-            # Manual screenshot for negative login
-            if not os.path.exists("reports/errors"): os.makedirs("reports/errors")
+            # --- UPDATED LOGIC FOR DYNAMIC RUN FOLDER ---
+            # Get current run path from environment variable set in conftest.py
+            current_run = os.environ.get("CURRENT_RUN_DIR", "reports")
+            error_dir = os.path.join(current_run, "errors")
+            
+            # Ensure folder exists
+            os.makedirs(error_dir, exist_ok=True)
+            
             clean_name = "".join(x for x in u if x.isalnum()) if u else "empty_user"
-            ss_path = f"reports/errors/login_err_{clean_name}.png"
+            ss_path = os.path.join(error_dir, f"login_err_{clean_name}.png")
             
             try:
                 driver.save_screenshot(ss_path)

@@ -1,6 +1,5 @@
 To run in Chrome:
-pytest tests/ -v -s --browser chrome --html=reports/chrome.html --self-contained-html 
-
+pytest tests/ -v -s --browser chrome
 
 To run in Edge:
-pytest tests/ -v -s --browser edge --html=reports/edge.html --self-contained-html
+pytest tests/ -v -s --browser edge
