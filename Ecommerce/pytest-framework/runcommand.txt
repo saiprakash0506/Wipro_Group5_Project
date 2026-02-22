@@ -4,3 +4,11 @@ pytest tests/ -v -s --browser chrome
 To run in Edge:
 pytest tests/ -v -s --browser edge
 
+
+
+Error message - then do this 
+
+C:\Users\user\.wdm\     --clear this 
+
+pip install --upgrade webdriver-manager selenium    -- run this and try to run it again
+

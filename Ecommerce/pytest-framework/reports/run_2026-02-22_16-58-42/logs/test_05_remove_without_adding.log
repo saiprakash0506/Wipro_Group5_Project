@@ -1,0 +1,4 @@
+2026-02-22 17:00:54,571 - INFO - --- STARTING NEGATIVE TEST: REMOVE WITHOUT ADDING ---
+2026-02-22 17:01:02,954 - INFO - Trying to remove product without adding...
+2026-02-22 17:01:13,001 - INFO - Expected failure occurred. Item was never added.
+2026-02-22 17:01:13,138 - INFO - Manual error screenshot saved: reports\run_2026-02-22_16-58-42\errors\remove_without_adding.png
