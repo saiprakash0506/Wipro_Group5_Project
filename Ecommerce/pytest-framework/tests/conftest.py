@@ -56,40 +56,21 @@ def setup(request):
         chrome_options.add_argument("--incognito")
         chrome_options.add_argument("--window-size=1920,1080")
         chrome_options.add_argument("--disable-features=PasswordLeakDetection")
-
-        prefs = {
-        "credentials_enable_service": False,
-        "profile.password_manager_enabled": False
-        }
+        prefs = {"credentials_enable_service": False, "profile.password_manager_enabled": False}
         chrome_options.add_experimental_option("prefs", prefs)
+        driver = webdriver.Chrome(service=ChromeService(ChromeDriverManager().install()), options=chrome_options)
 
-    # 👇 THIS IS THE REAL FIX
-        driver_path = ChromeDriverManager().install()
-
-        if driver_path.endswith("THIRD_PARTY_NOTICES.chromedriver"):
-            driver_path = driver_path.replace(
-            "THIRD_PARTY_NOTICES.chromedriver",
-            "chromedriver.exe"
-        )
-
-        chrome_service = ChromeService(executable_path=driver_path)
-
-        driver = webdriver.Chrome(
-        service=chrome_service,
-        options=chrome_options
-        )
-    
     elif browser_name == "firefox":
         ff_options = FirefoxOptions()
-        ff_options.add_argument("-private")
-        ff_options.add_argument("--width=1920")
-        ff_options.add_argument("--height=1080")
-        ff_options.set_preference("browser.startup.homepage_override.mstone", "ignore")
-        ff_options.set_preference("startup.homepage_welcome_url.additional", "")
-        ff_options.set_preference("sidebar.visible", False) 
-        ff_options.set_preference("dom.disable_beforeunload", True)
-        ff_options.set_preference("fission.autostart", False)
-        driver = webdriver.Firefox(service=FirefoxService(executable_path=firefox_exe), options=ff_options)
+        ff_options.set_preference("browser.privatebrowsing.autostart", True)
+        ff_options.set_preference("layout.css.devPixelsPerPx", "1.0")
+
+        driver = webdriver.Firefox(
+        service=FirefoxService(executable_path=firefox_exe),
+        options=ff_options
+        )
+
+        driver.set_window_rect(0, 0, 1920, 1080)
 
     elif browser_name == "edge":
         edge_options = EdgeOptions()
