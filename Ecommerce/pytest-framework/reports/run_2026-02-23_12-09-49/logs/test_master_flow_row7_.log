@@ -1,0 +1,4 @@
+2026-02-23 12:21:22,671 - INFO - --- STARTING: User firstname ---
+2026-02-23 12:21:36,585 - ERROR - DYNAMIC ERROR: Error: Last Name is required
+2026-02-23 12:21:36,781 - INFO - Screenshot saved to: reports\run_2026-02-23_12-09-49\errors\checkout_fail_firstname_1771829496.png
+2026-02-23 12:21:36,781 - INFO - Terminating current row and moving to next...
